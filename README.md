@@ -4,7 +4,7 @@ WebContent is a Java library for retrieving content from a URL and download file
 
 ## Installation
 
-Download the [jar](https://github.com/Sanya056756/webcontent/tree/master/out/artifacts/webcontent) file and add it to your library list.
+Download the [jar](https://github.com/Sanya056756/webcontent/releases) file and add it to your library list.
 
 ## Usage
 
