@@ -3,7 +3,6 @@ package user.sanya056756.net;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -16,7 +15,7 @@ import java.util.Map;
 
 /**
  * <strong>
- *     Simple library for retrieving content from a URL.
+ *     Simple library for retrieving content from a URL and downloading files.
  *     <p>
  *     It offers easy-to-use functions for making HTTP requests and processing the received data.
  *     <p>
@@ -32,11 +31,8 @@ import java.util.Map;
  * @since 7
  *
  */
-public class WebContent {
 
-    public static InputStream getData(String url) throws IOException {
-        return getWebInputStream(url);
-    }
+public class WebContent {
 
     public static InputStream getData(String url, Map<String, String> headers, Map<String, String> post)
             throws IOException, WebContentException {
@@ -71,6 +67,10 @@ public class WebContent {
         }
     }
 
+    public static InputStream getData(String url) throws IOException {
+        return getWebInputStream(url);
+    }
+
     public static InputStream getDataHeader(String url, Map<String, String> headers)
             throws WebContentException, IOException {
         return getData(url, headers, null);
@@ -80,6 +80,10 @@ public class WebContent {
             throws WebContentException, IOException {
         return getData(url, null, post);
     }
+
+    /**
+     * <li>Private special methods</li>
+     */
 
     private static InputStream getDataType(String url, Map<String, String> headers, Map<String, String> post, String dataType)
             throws WebContentException, IOException {
@@ -92,44 +96,6 @@ public class WebContent {
             headers.put("Content-Type", "application/x-www-form-urlencoded");
 
         return getData(url, headers, post);
-    }
-
-    /**
-     * <li>JSON</li>
-     */
-
-    public static InputStream getJsonData(String url, Map<String, String> headers, Map<String, String> post)
-            throws WebContentException, IOException {
-        return getDataType(url, headers, post, "json");
-    }
-
-    public static InputStream getJsonDataHeader(String url, Map<String, String> headers)
-            throws WebContentException, IOException {
-        return getJsonData(url, headers, null);
-    }
-
-    public static InputStream getJsonDataPost(String url, Map<String, String> post)
-            throws WebContentException, IOException {
-        return getJsonData(url, null, post);
-    }
-
-    /**
-     * <li>Xml</li>
-     */
-
-    public static InputStream getXmlData(String url, Map<String, String> headers, Map<String, String> post)
-            throws WebContentException, IOException {
-        return getDataType(url, headers, post, "xml");
-    }
-
-    public static InputStream getXmlDataHeader(String url, Map<String, String> headers)
-            throws WebContentException, IOException {
-        return getXmlData(url, headers, null);
-    }
-
-    public static InputStream getXmlDataPost(String url, Map<String, String> post)
-            throws WebContentException, IOException {
-        return getXmlData(url, null, post);
     }
 
     private static String getStringPost(Map<String, String> post) {
@@ -149,19 +115,67 @@ public class WebContent {
     }
 
     /**
+     * <li>JSON</li>
+     */
+
+    public static InputStream getJsonData(String url, Map<String, String> headers, Map<String, String> post)
+            throws WebContentException, IOException {
+        return getDataType(url, headers, post, "json");
+    }
+
+    public static InputStream getJsonData(String url) throws WebContentException, IOException {
+        return getJsonData(url, null, null);
+    }
+
+    public static InputStream getJsonDataHeader(String url, Map<String, String> headers)
+            throws WebContentException, IOException {
+        return getJsonData(url, headers, null);
+    }
+
+    public static InputStream getJsonDataPost(String url, Map<String, String> post)
+            throws WebContentException, IOException {
+        return getJsonData(url, null, post);
+    }
+
+    /**
+     * <li>XML</li>
+     */
+
+    public static InputStream getXmlData(String url, Map<String, String> headers, Map<String, String> post)
+            throws WebContentException, IOException {
+        return getDataType(url, headers, post, "xml");
+    }
+
+    public static InputStream getXmlData(String url) throws WebContentException, IOException {
+        return getXmlData(url, null, null);
+    }
+
+    public static InputStream getXmlDataHeader(String url, Map<String, String> headers)
+            throws WebContentException, IOException {
+        return getXmlData(url, headers, null);
+    }
+
+    public static InputStream getXmlDataPost(String url, Map<String, String> post)
+            throws WebContentException, IOException {
+        return getXmlData(url, null, post);
+    }
+
+    /**
      * <strong>
      *     Without post and headers args.
      *     <p>
      *     Faster than getData(String, Map, Map).
      * </strong>
      */
+
     public static InputStream getWebInputStream(String url) throws IOException {
         return new URL(url).openStream();
     }
 
     /**
-     * <li>Download file</li>
+     * <li>Downloading files</li>
      */
+
     public static void downloadFile(String url, String saveDirectory) throws IOException {
         downloadFile(url, saveDirectory, url.substring(url.lastIndexOf("/")+1));
     }
@@ -173,6 +187,10 @@ public class WebContent {
     public static void downloadFile(String url, Path path) throws IOException {
         Files.copy(getWebInputStream(url), path, StandardCopyOption.REPLACE_EXISTING);
     }
+
+    /**
+     * <li>Checks internet availability by trying to open a data stream to the specified host.</li>
+     */
 
     public static boolean isInternetAvailable() {
         return getAvailableHost("https://google.com");
@@ -187,8 +205,9 @@ public class WebContent {
     }
 
     /**
-     * Exception <strong>WenContentException</strong>
+     * <li>Exception <strong>WenContentException</strong></li>
      */
+
     public static class WebContentException extends Exception {
 
         WebContentException(String message) {
