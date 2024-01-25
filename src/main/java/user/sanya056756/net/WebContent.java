@@ -24,7 +24,7 @@ import java.util.Map;
  * <li>XML</li>
  *
  * @author _Sanya056756_
- * @version 1.0
+ * @version 1.2
  * @since 7
  *
  */
