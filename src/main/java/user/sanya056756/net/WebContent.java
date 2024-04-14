@@ -95,7 +95,7 @@ public class WebContent {
 
         for (Map.Entry<String, String> entry : post.entrySet()) {
             builder.append(entry.getKey()).append("=").append(entry.getValue());
-            if (i++ == size)
+            if (++i == size)
                 return builder.toString();
             builder.append("&");
         }
