@@ -1,4 +1,4 @@
-package user.sanya056756.net;
+package user.sanee4ka.net;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,10 +6,11 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
+ * @author sanee4ka
+ * @version 1.3
  * @since 7
- * @version 1.0
- * @author _Sanya056756_
  */
+
 public class WebHandler {
 
     public static String getData(String url, Map<String, String> headers, Map<String, String> post) throws IOException {

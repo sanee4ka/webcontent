@@ -1,4 +1,4 @@
-package user.sanya056756.net;
+package user.sanee4ka.net;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,8 +23,8 @@ import java.util.Map;
  * <li>JSON</li>
  * <li>XML</li>
  *
- * @author _Sanya056756_
- * @version 1.2
+ * @author sanee4ka
+ * @version 1.3
  * @since 7
  *
  */
